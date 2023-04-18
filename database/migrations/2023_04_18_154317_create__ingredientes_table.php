@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_ingredientes', function (Blueprint $table) {
+        Schema::create('ingredientes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             //propiedades definidas manualmente
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_ingredientes');
+        Schema::dropIfExists('ingredientes');
     }
 };

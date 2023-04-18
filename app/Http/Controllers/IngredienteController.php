@@ -13,7 +13,7 @@ class IngredienteController extends Controller
      */
     public function index()
     {
-        $data = Ingredientes::All();
+        $data['ingredientes'] = Ingredientes::All();
 
         return view('ingrediente.index', $data);
     }
@@ -33,7 +33,10 @@ class IngredienteController extends Controller
     public function store(Request $request)
     {
         //
-        $ingredienteData = 
+        $ingredienteData = request()->except('_token');
+        Ingredientes::insert($ingredienteData);
+
+        return redirect()->route('ingrediente.index');
 
     }
 
@@ -51,7 +54,8 @@ class IngredienteController extends Controller
     public function edit(string $id)
     {
         //
-
+        $ingrediente=Ingredientes::findOrFail($id);
+        return view('ingrediente.edit', compact('ingrediente'));
 
     }
 
@@ -61,6 +65,9 @@ class IngredienteController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $ingredienteData=request()->except(['_token', '_method']);
+        Ingredientes::where('id', '=', $id)->update($ingredienteData);
+        return redirect('ingrediente');
     }
 
     /**
@@ -69,6 +76,8 @@ class IngredienteController extends Controller
     public function destroy(string $id)
     {
         //
+        Ingredientes::destroy($id);
+        return redirect('ingrediente');
     }
 }
 
