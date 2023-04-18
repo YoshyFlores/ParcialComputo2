@@ -13,7 +13,7 @@ class RecetaController extends Controller
     public function index()
     {
         //agregamos funcionalidad para el index
-        $data= Receta::All();
+        $data['recetas']= Receta::All();
         return view('receta.index', $data);
 
     }
@@ -32,8 +32,11 @@ class RecetaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $recetaData
+          //recepcionar todos los datos
+          $recetaData = request()->except('_token');
+          Receta::insert($recetaData);
+          return redirect()->route('receta.index');
+        
     }
 
     /**
@@ -49,7 +52,10 @@ class RecetaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //recuperar los datos
+        $receta=Receta::findOrFail($id);
+        return view('receta.edit', compact('receta'));
+
     }
 
     /**
@@ -58,6 +64,9 @@ class RecetaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $recetaData=request()->except(['_token', '_method']);
+        Receta::where('id', '=', $id)->update($recetaData);
+        return redirect('receta');
     }
 
     /**
@@ -66,6 +75,8 @@ class RecetaController extends Controller
     public function destroy(string $id)
     {
         //
+        Receta::destroy($id);
+        return redirect('receta');
         
     }
 }

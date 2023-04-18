@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_recetas', function (Blueprint $table) {
+        Schema::create('recetas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             //agregando propiedades a la tabla
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_recetas');
+        Schema::dropIfExists('recetas');
     }
 };
